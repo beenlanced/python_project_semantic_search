@@ -99,7 +99,6 @@ The project uses the well-known `source (SRC)` layout structure. It contains the
 ├── imgs
 │   ├── semantic_search_workflow.jpg
 │   └── shaw_result.jpg
-├── main.py
 ├── pyproject.toml
 ├── README.md
 ├── semantic_search_yt.egg-info
