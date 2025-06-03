@@ -54,7 +54,7 @@ The project uses the well-known `source (SRC)` layout structure. It contains the
 - `Functional tests` and `unit tests` using `pytest`,
 - `Git` (version control),
 - `Github` with a pull request template like you might use at work,
-- `Hugging-Face` sentence transformer models to embed test files,
+- `Hugging Face` sentence transformer models to embed test files,
 - `NLP` to translate user defined queries into the closest matches of related video content,
 - `Type` hinting using `mypy` and `Pylance`,
 - `Web application` using `FastAPI`,
