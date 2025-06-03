@@ -50,7 +50,7 @@ def make_video_records(response: requests.models.Response) -> list[dict[str,str]
 
         video_record_list.append(video_record)
 
-        return video_record_list
+    return video_record_list
 
 def extract_video_data(
         page_token: int,
