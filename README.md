@@ -108,6 +108,12 @@ Open a browser and use: http://127.0.0.1:8000
 
 ## Special Notes
 
+#you can put these three in an .env folder locally and to add in github secrets for your own actions (see placement in .github/workflow/{}.yml)
+
+API_URL="https://www.googleapis.com/youtube/v3/search" #Publically available API from YOUTUBE
+CHANNEL_ID="UCa9gErQ9AE5jT2DZLjXBIdA" # Channel ID of the Shaw Talebi's youtub chanel
+MY_YOUTUBE_API_KEY="GET YOUR OWN YOUTUBE API KEY" #link to video of how to get your own API
+
 I ignore warning message like below during testing and running the code.
 
 ```
@@ -181,3 +187,13 @@ Need
 12. Monitor the deployment progress in the ECS console to ensure the changes resolve the issue
 
 https://gallery.ecr.aws/docker/library/python
+
+###
+
+Get hub actions
+
+crontabresource
+https://crontab.guru/
+
+Setup github actions to generate new image and push to docker.
+Complete readme
