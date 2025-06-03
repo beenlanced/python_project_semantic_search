@@ -91,3 +91,93 @@ use with Polars dataframes
 
 Test in the browser. with Gradio
 videos won't render as well in the
+
+## Generating a solution.
+
+We include the `all-MiniLM-L6-v2` sentence transformer model code for the containerized solution
+as it is the ML/AI model being used and would get passed into code.
+downloaded from
+https://github.com/henrytanner52/all-MiniLM-L6-v2
+
+To run during development
+in the same directory as the app.py folder
+`$ uv run fastapi dev app.py`
+
+Then: in tests folder you can run a notebook that will run some tests
+Open a browser and use: http://127.0.0.1:8000
+
+## Special Notes
+
+I ignore warning message like below during testing and running the code.
+
+```
+ PerformanceWarning: Determining the column names of a LazyFrame requires resolving its schema, which is a potentially expensive operation. Use `LazyFrame.collect_schema().names()` to get the column names without this warning.
+    dist_arr = dist.pairwise(df.select(df.columns[4:388]).collect(), query_embedding) + dist.pairwise(df.select(df.columns[388:]).collect(), query_embedding)
+```
+
+As the code works fine and making the suggested change breaks the code. There is a reported [bug: use LazyFrame.collect_schema().names() over LazyFrame.columns #1744](https://github.com/unionai-oss/pandera/issues/1744) for this issue and the recommendation is to not use the suggested change in the warning message.
+
+## Docker file
+
+using uv dual build
+
+created image using
+$ docker build -t semantic_search_app .
+
+creating container
+-d will run the container in the background
+$ docker run -d -p 80:80 --name yt_semantic_search_demo semantic_search_app
+
+Use the notebook in the /data test folder to test docker container is running
+(See Section)
+
+- make sure container is running (optional check in )
+  - $ docker ps -a # check if your container is running
+  - view in dockerhub ui (optional)
+
+## AWS
+
+in your account
+Elastic Container Service (ECS)
+Need
+
+1. Navigate to the ECS console and select the 'yt_search_cluster_demo' cluster
+
+2. In the cluster view, locate the service 'yt_search_demo-service-66z0w9ow' and select it
+
+3. Review the 'Events' tab for the service to identify specific deployment failure reasons
+
+4. Check the 'Deployments' tab to see if there are any failed tasks or if the desired count doesn't match the running count
+
+5. If tasks are failing, select a failed task and review its logs for error messages
+
+6. Verify the task definition:
+
+   - Ensure the container image exists and is accessible
+   - Check if the container port mappings are correct
+   - Verify the task CPU and memory allocations are sufficient
+
+7. Review the service's network configuration:
+
+   - Ensure the VPC, subnets, and security groups are properly configured
+   - Verify that the necessary inbound and outbound rules are set in the security groups
+
+8. Check the service auto scaling settings (if enabled) to ensure they are not causing issues
+
+9. If the issue persists, consider rolling back to the previous task definition version:
+
+   - Go to the 'Task Definitions' section
+   - Select the previous working version of the task definition
+   - Choose 'Create new revision'
+   - Update the service to use this new revision
+
+10. If you don't have permissions to perform any of these actions, contact your AWS Administrator
+
+11. If all else fails, consider force deploying a new service:
+
+    - Create a new service with a different name but using the same task definition and configuration
+    - Once the new service is stable, delete the old service
+
+12. Monitor the deployment progress in the ECS console to ensure the changes resolve the issue
+
+https://gallery.ecr.aws/docker/library/python

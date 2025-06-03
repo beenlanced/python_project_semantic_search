@@ -1,10 +1,7 @@
-#import logging
 from pathlib import Path
 
 from get_video_data import extract_video_data, get_yt_transcripts, validate_and_transform_data
 
-
-# logger = logging.getLogger(__name__)
 
 def main() -> None:
     """

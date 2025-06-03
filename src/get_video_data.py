@@ -12,14 +12,11 @@ from youtube_transcript_api import YouTubeTranscriptApi
 # Load environment variables from the .env file (if present)
 # Use override=True to fetch the correct value whenever it is updated 
 if load_dotenv(override=True):
-    #add future logging message here saying .env is present
-
     #Access environment variables
     API_URL = os.getenv("API_URL")
     CHANNEL_ID = os.getenv("CHANNEL_ID")
     MY_YOUTUBE_API_KEY = os.getenv("MY_YOUTUBE_API_KEY")
 else:
-    #add future logging message
     print(".env not present")
     print("unable to obtain CHANNEL_ID or MY_YOUTUBE_API_KEY")
 
@@ -41,13 +38,12 @@ def make_video_records(response: requests.models.Response) -> list[dict[str,str]
     video_record_list = []
 
     for raw_item in json.loads(response.text)['items']:
-
         # Execute for YouTube videos only
         if raw_item["id"]["kind"] != "youtube#video":
             continue
 
         # Creata a video_record
-        video_record = {} 
+        video_record = {}
         video_record["video_id"] = raw_item["id"]["videoId"]
         video_record["datetime"] = raw_item["snippet"]["publishedAt"]
         video_record["title"] = raw_item["snippet"]["title"]
