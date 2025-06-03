@@ -23,6 +23,10 @@ jobs:
       #EXAMPLE_ENVIRONMENT_VARIABLE: ${{ secrets.EXAMPLE_ENVIRONMENT_VARIABLE }}
 
     steps:
+      # Step 0: Free up space to avoid no space left on device
+      - name: Delete huge unnecessary tools folder
+        run: rm -rf /opt/hostedtoolcache
+
       # Step 1: Check out the code from the repository
       - name: Checkout repository code
         uses: actions/checkout@v4
