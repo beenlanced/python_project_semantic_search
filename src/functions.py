@@ -1,11 +1,11 @@
 import numpy as np
 import polars
-import sentence_transformers
+from sentence_transformers import SentenceTransformer
 import sklearn
 
 def return_search_result_indices(query: str, 
                         df: polars.lazyframe.frame.LazyFrame, 
-                        model: sentence_transformers, 
+                        model: SentenceTransformer, 
                         dist: sklearn.metrics.DistanceMetric) -> np.ndarray:
     """
     Method to return the indices of the top search results
@@ -13,7 +13,7 @@ def return_search_result_indices(query: str,
     Args:
         query (str): The user query string to search for videos
         df (polars.lazyframe.frame.LazyFrame): the data 
-        model (sentence_transformers): The sentence transformer model
+        model (SentenceTransformer): The sentence transformer model
         dist (sklearn.metrics.DistanceMetric): The distance measure used here it is Manhattan
 
     Returns:
