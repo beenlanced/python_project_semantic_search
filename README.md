@@ -1,203 +1,331 @@
-How to get your Youtube API key
-https://www.youtube.com/watch?v=LLAZUTbc97I&t=48s
+# Semantic Search Application - Solving the Problem of Increasing YouTube Viewer Engagement
 
-1. run perform_data_ingestion module by itself to first to accomplish data engineering aspects
-   ETL extract transform and load data.
+<p>
+  <img src="./imgs/shaw_result.jpg"/>
+</p>
 
-Produces the data files
+<br>
 
-2.
+![Code Coverage](https://img.shields.io/badge/coverage-100%25-green)
+[![Semantic Search App Tests](https://github.com/beenlanced/python_project_semantic_search/actions/workflows/semantic_search_test.yml/badge.svg)](https://github.com/beenlanced/python_project_semantic_search/actions/workflows/semantic_search_est.yml)
 
-##
+---
 
-`Note` because of changes to YouTube API, I had to use alternate data files to truly show the ML solution.
+## Project Description
 
-These files are
+### Problem
 
-- video_transcripts_full.parquet
+YouTuber [Shaw Talebi](https://www.youtube.com/@ShawhinTalebi) puts out lots of YouTube video content covering a diverse range of topics, mostly data science videos, but also entrepreneurship guides, self-help videos, and general well-being videos. His viewers `have difficulties locating content` that aligns with their specific interests because one word tags of video content don't always capture the exact interest category and applying numerous tags only exacerbates the search issue by causing false reads.
 
-  - A more robust file of video ids, datetimes, titles, and transcripts
+### Why it needs to be addressed
 
-- video_index_full.parquet
+This inability to find desired content means his channel gets lower engagement translating to stunted audience growth. His viewers may leave (bounce) from his channel or become so frustrated on missing out on content that they provide negative reviews. In short, he will lose out on YouTube revenue, miss out on potential “likes”, and waste time providing video content that viewers don't want or just can’t find.
 
-  - A
+### Proposed Solution
 
-- eval_raw.csv
+This project extends and expands on Shaw's `Full Stack Data Science` [project](https://www.youtube.com/watch?v=03x2oYg9oME&list=PLz-ep5RbHosWmAt-AMK0MBgh3GeSvbCmL&index=3).
 
-  - A file of user queries, and video ids. This file is used to evaluate the Machine Learning Solutions.
+It:
 
-  ## Deep Learning Transformer models used
+- scans Shaw’s YouTube channel to acquire video titles, ids, and transcripts to create a central searchable repository,
 
-  Rnaking for each evaluation query happens
+- uses AI/ML natural language processing (NLP) and Deep Learning techniques to translate user defined queries into the closest matches of related video content, and
 
-  SentenceTransformers is a set of models and frameworks that enable training and generating sentence embeddings from given data. The generated sentence embeddings can be utilized for Clustering, Semantic Search and other tasks.
+- provides a FastAPI web application deployed locally and by an `Amazon Web Services - Elastic Container Service (AWS-ECS)` that allows his channel’s users to submit queries and retrieve links and playable videos of content from his YouTube channel that are similar to the query.
 
-  Hugging face (sentence transformer models)
+### Modeling Approach
 
-  - all-MiniLM-L6-v2
-  - multi-qa-distilbert-cos-v1
-  - multi-qa-mpnet-base-dot-v1
+<p>
+  <img src="./imgs/semantic_search_workflow.jpg"/>
+</p>
 
-Distance Measures:
+---
 
-- Euclidean
-- Manhattan
-- Chebyshev
+## Objective
 
-Similarity measures:
+The project uses the well-known `source (SRC)` layout structure. It contains the key elements:
 
-- Cosine Similarity
-- Dot Score
+- `AWS-ECS`, Amazon Web Services - Elastic Cloud Service, runs virtual machine to render the semantic search web application supplied by building a Docker container from a deployed Docker image from Docker hub.
+- `CI/CD` automated pipeline created using `GitHub Actions`,
+- `Deep Learning` for neural network transformers,
+- `Docker`. Application code is containerized so it can be deployed just as easily to a user's host machine or to the cloud. It uses a Dockerfile that employs a multi-stage docker build using `uv`,
+- `Custom Exceptions` for when you want to create your own unique error messages,
+- `FastAPI` web framework use to build APIs for this semantic search application,
+- `Functional tests` and `unit tests` using `pytest`,
+- `Git` (version control),
+- `Github` with a pull request template like you might use at work,
+- `Hugging-Face` sentence transformer models to embed test files,
+- `NLP` to translate user defined queries into the closest matches of related video content,
+- `Type` hinting using `mypy` and `Pylance`,
+- `Web application` using `FastAPI`,
+- `uv` package management including use of `ruff` for linting and formatting, and
+- `YouTube API` to access YouTube statistics and data for a specific YouTube channel.
 
-Evaluation using 3 different possible embeddings:
+---
 
-- Title (most sparse)
-- Transcript
-- Title + Transcript (most dense)
+## Tech Stack
 
-## Summary - model choice
+![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?logo=amazon-web-services&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009485.svg?logo=fastapi&logoColor=white)
+![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-%23121011.svg?logo=github&logoColor=white)
+![Hugging Face](https://img.shields.io/badge/Hugging%20Face-FFD21E?logo=huggingface&logoColor=000)
+![HTML](https://img.shields.io/badge/HTML-%23E34F26.svg?logo=html5&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-4DABCF?logo=numpy&logoColor=fff)
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
+![YAML](https://img.shields.io/badge/YAML-CB171E?logo=yaml&logoColor=fff)
+![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?logo=YouTube&logoColor=white)
 
-The best embedding method overall was `all-MiniLM-L6-v2_title_transcript_manhattan` for this project because:
+---
 
-- all-MiniLM-L6-v2 is the most compact transformer and gives computational efficiency.
+## Project Structure
 
-- It ranked hig as far as Mean. It was in the top 3 of the methods, and although not number 1 in the top-1
-  it appears fairly efficient for its low cost complexity and size.
+```
+├── data
+│   ├── all-MiniLM-L6-v2
+│   ├── eval_raw.csv
+│   ├── video_ids.csv
+│   ├── video_ids.parquet
+│   ├── video_index_full.parquet
+│   ├── video_transcripts_full.parquet
+│   ├── video_transcripts.csv
+│   └── video_transcripts.parquet
+├── Dockerfile
+├── exceptions
+│   └── custom_exceptions.py
+├── imgs
+│   ├── semantic_search_workflow.jpg
+│   └── shaw_result.jpg
+├── main.py
+├── pyproject.toml
+├── README.md
+├── semantic_search_yt.egg-info
+├── src
+│   ├── app.py
+│   ├── data_science
+│   │   ├── create_video_index.ipynb
+│   │   ├── develop_models.ipynb
+│   │   └── execute_search_function.ipynb
+│   ├── eda.ipynb
+│   ├── functions.py
+│   ├── get_video_data.py
+│   ├── perform_data_ingestion.py
+├── tests
+│   ├── functional
+│   │   └── test_api.py
+│   ├── test_UI.ipynb
+│   └── unit
+│       └── test_return_search_result_indices.py
+└── uv.lock
+```
 
-- It utilizes both title and transcript.
+---
 
-┌─────────────────────────────────┬─────────────────┬──────────────┬──────────────┐
-│ method_name ┆ rank_query-mean ┆ num_in_top-1 ┆ num_in_top-3 │
-│ --- ┆ --- ┆ --- ┆ --- │
-│ str ┆ f64 ┆ u32 ┆ u32 │
-╞═════════════════════════════════╪═════════════════╪══════════════╪══════════════╡
-│ all-MiniLM-L6-v2_title_transcr… ┆ 0.875 ┆ 41 ┆ 60 │
-│ all-MiniLM-L6-v2_title_manhatt… ┆ 0.921875 ┆ 44 ┆ 58 │
-│ all-MiniLM-L6-v2_title_transcr… ┆ 0.96875 ┆ 41 ┆ 61 │
-│ all-MiniLM-L6-v2_title_euclide… ┆ 1.09375 ┆ 45 ┆ 57 │
-│ all-MiniLM-L6-v2_title_cos-sim ┆ 1.09375 ┆ 45 ┆ 57 │
-└─────────────────────────────────┴─────────────────┴──────────────┴──────────────┘
+## Getting Started
 
-## Created final data store using the winning method
+Here are some instructions to help you set up this project locally.
 
-`video_index_full.parquet`
-This file will be the final data store will use in our production system. Essentially the data that
-get's stored in the cloud and/or used for production purposes
+---
 
-## Generating User interface
+## Installation Steps
 
-reference: https://realpython.com/polars-lazyframe/
-use with Polars dataframes
+### Option 1: Installation from Github with UV (recommended)
 
-Test in the browser. with Gradio
-videos won't render as well in the
+Here are the steps to install and set up a Github repository as a package/project directly from a `GitHub` repository using `uv`:
 
-## Generating a solution.
+1. **Install uv**
 
-We include the `all-MiniLM-L6-v2` sentence transformer model code for the containerized solution
-as it is the ML/AI model being used and would get passed into code.
-downloaded from
-https://github.com/henrytanner52/all-MiniLM-L6-v2
+   - If you haven't already, install uv. Several installation methods are available, including using a standalone installer or installing from PyPI with pipx or pip.
 
-To run during development
-in the same directory as the app.py folder
-`$ uv run fastapi dev app.py`
+     - Using the standalone installer (example for macOS/Linux)
 
-Then: in tests folder you can run a notebook that will run some tests
-Open a browser and use: http://127.0.0.1:8000
+       ` curl -fsSL https://astral.sh/uv/install.sh | s`
+
+   - Install from GitHub: Use `uv pip install` with the GitHub repository URL. The format is.
+
+     `uv pip install git+https://github.com//<repo>.git`
+
+   - To install a specific branch, tag, or commit, add `@<reference>` to the URL.
+
+`uv pip install git+https://github.com/beenlanced/python_project_semantic_search.git@<branch_name>`
+
+- Editable installs: For local development where you want changes in the repository to be immediately reflected, use the `-e` flag.
+
+`uv pip install -e git+https://github.com/beenlanced/python_project_semantic_search.git`
+
+- Specifying dependencies in pyproject.toml: You can also add the GitHub repository as a dependency in your pyproject.toml file.
+
+  [tool.poetry.dependencies]
+  your_package = { git = "https://github.com/beenlanced/python_project_semantic_search.git", rev = "<branch/tag/commit>" } # For Poetry
+
+  [project.dependencies]
+  your_package = { git = "https://github.com/beenlanced/python_project_semantic_search.git", ref = "<branch/tag/commit>" } # For setuptools/build
+
+2. **Install Dependencies- with `uv` it is already done for you**
+
+   - All dependencies should be specified in the **pyproject.toml** file, so you should not have to add any additional dependencies.
+   - To update your projects virtual environment simply run  
+      `uv pip sync`
+     This will also activate your virtual environment (e.g., .venv folder) without requiring manual activation of the environment on your part with all the required packages as specified in the **pyproject.toml** file.
+
+3. **Run the Project**
+
+   - Start the project by running the appropriate command at the `src` directory
+     ```
+     uv run fastapi dev app.py
+     ```
+     or
+     ```
+     uv run fastapi dev src/app.py
+     ```
+
+4. **Access the Project's Web Interface **
+
+   - Open a web browser with following url.
+     - http://127.0.0.1:8000/search
+
+5. You can test via a `Jupyter` notebook in the `test` directory. View that notebook for guidance on testing.
+
+### Option 2: Installation from DockerHub
+
+If you prefer to use Docker, you can install and run the project using a Docker container from an image from my DockerHub:
+
+1. **Pull the Docker Image**
+
+   - Open your terminal or command prompt.
+   - Run the following command to pull the Docker image from DockerHub:
+     ```
+     docker pull ubeenlanced/semantic_search_app:latest
+     ```
+
+2. **Run the Docker Container**
+
+   - Start the Docker container by running the following command. Adjust the port mapping as needed:
+     ```
+     docker run -d -p 80:80 --name yt_semantic_search_demo semantic_search_app
+     ```
+     This command launches the project within a Docker container.
+
+3. **Access the Project**
+   - Open a web browser or the appropriate client to access the project.
+     - http://127.0.0.1:8000/search/
+
+---
 
 ## Special Notes
 
-#you can put these three in an .env folder locally and to add in github secrets for your own actions (see placement in .github/workflow/{}.yml)
+1. **Key variabless you must specify**
 
-API_URL="https://www.googleapis.com/youtube/v3/search" #Publically available API from YOUTUBE
-CHANNEL_ID="UCa9gErQ9AE5jT2DZLjXBIdA" # Channel ID of the Shaw Talebi's youtub chanel
-MY_YOUTUBE_API_KEY="GET YOUR OWN YOUTUBE API KEY" #link to video of how to get your own API
+   - `API_URL`="https://www.googleapis.com/youtube/v3/search"
 
-I ignore warning message like below during testing and running the code.
+     - Publically available API from YouTube
+
+   - `CHANNEL_ID`="UCa9gErQ9AE5jT2DZLjXBIdA"
+
+     - Channel ID of Shaw Talebi's YouTube channel
+
+   - `MY_YOUTUBE_API_KEY`="GET YOUR OWN YOUTUBE API KEY"
+     - [link](https://www.youtube.com/watch?v=LLAZUTbc97I&t=48s) to explain how to get your person YouTube API key
+
+2. **Sentence transformer models**
+
+   - Three sentence transfomer models were evaluated:
+
+     - all-MiniLM-L6-v2
+     - multi-qa-distilbert-cos-v1
+     - multi-qa-mpnet-base-dot-v1
+
+   - The best embedding method overall was `all-MiniLM-L6-v2_title_transcript_manhattan` for this project because:
+
+     - all-MiniLM-L6-v2 is the most compact transformer and provides computational efficiency.
+
+     - it ranked high across all evaluation metrics (see eda notebooks)
+
+     - It utilizes both titles and transcripts
+
+   - We include the `all-MiniLM-L6-v2` sentence transformer model code for the containerized solution as it is the ML/AI model being used and would get passed into code.
+
+     downloaded from:
+     https://github.com/henrytanner52/all-MiniLM-L6-v2
+
+3. **Created final data store using the winning method**
+
+   `video_index_full.parquet`:
+   This file will be the final data store used for production systems. Essentially, the data that get's stored in the cloud and/or used for production purposes
+
+4. **ignore this warning message**
+
+   I ignore warning message below during testing and running the code.
+
+   ```
+   PerformanceWarning: Determining the column names of a LazyFrame requires resolving its schema, which is a potentially expensive operation. Use `LazyFrame.collect_schema().names()` to get the column names without this warning.
+       dist_arr = dist.pairwise(df.select(df.columns[4:388]).collect(), query_embedding) + dist.pairwise(df.select(df.columns[388:]).collect(), query_embedding)
+   ```
+
+   The code works fine and making the suggested change will break the code. There is already a reported [bug: use LazyFrame.collect_schema().names() over LazyFrame.columns #1744](https://github.com/unionai-oss/pandera/issues/1744) for this issue and the recommendation is to not use the suggested change in the warning message.
+
+5. **To create your own AWS-ECS account**
+
+   [AWS-ECS Free Tier](https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=*all)
+
+   From within your account and once you get a service up and running, you will need to load the semantic search app image: `ubeenlanced/semantic_search_app:latest` from Dockerhub to create a container that will run the app.
+
+   - Within your AWA cluster/service setup, under Networking tabs make sure to create a new `inbound traffic rule`
+     - set `types` to `all` types of traffic and
+     - set `source` to `My IP`
+       - this will help allow access to the running services public IP address for the ECS service running the semantic search application.
+
+6.**Avoiding Github Actions workflow causing GitHub to run out of memory space**
+
+When dealing with Deep Learning Models, it is possible to exhaust the allotted GitHub memory space when running GitHub actions to build Docker images and to test AI/ML models. A way to mitigate the space issue is to remove unnecessary files created in your workflow.
+
+[reference](https://github.com/orgs/community/discussions/25678)
+
+In workflows, add the following code in `steps` section to free up space by removing unnecessary files (see my `semantic_search_test.yml`):
 
 ```
- PerformanceWarning: Determining the column names of a LazyFrame requires resolving its schema, which is a potentially expensive operation. Use `LazyFrame.collect_schema().names()` to get the column names without this warning.
-    dist_arr = dist.pairwise(df.select(df.columns[4:388]).collect(), query_embedding) + dist.pairwise(df.select(df.columns[388:]).collect(), query_embedding)
+steps:
+     # Step 0: Free up space to avoid no space left on device
+     - name: Delete huge unnecessary tools folder
+       run: rm -rf /opt/hostedtoolcache
 ```
 
-As the code works fine and making the suggested change breaks the code. There is a reported [bug: use LazyFrame.collect_schema().names() over LazyFrame.columns #1744](https://github.com/unionai-oss/pandera/issues/1744) for this issue and the recommendation is to not use the suggested change in the warning message.
+---
 
-## Docker file
+## Review the Source Code
 
-using uv dual build
+Have a look at the various directories, modules, and other files for examples of how to perform testing, set up Dockerfiles, etc.
+The project is full of insights.
 
-created image using
-$ docker build -t semantic_search_app .
+---
 
-creating container
--d will run the container in the background
-$ docker run -d -p 80:80 --name yt_semantic_search_demo semantic_search_app
+### Final Words
 
-Use the notebook in the /data test folder to test docker container is running
-(See Section)
+Thanks for visting.
 
-- make sure container is running (optional check in )
-  - $ docker ps -a # check if your container is running
-  - view in dockerhub ui (optional)
+Give the project a star (⭐) if you liked it or if it was helpful to you!
 
-## AWS
+You've `beenlanced`! 😉
 
-in your account
-Elastic Container Service (ECS)
-Need
+---
 
-1. Navigate to the ECS console and select the 'yt_search_cluster_demo' cluster
+## Acknowledgements
 
-2. In the cluster view, locate the service 'yt_search_demo-service-66z0w9ow' and select it
+I would like to extend my gratitude to all the individuals and organizations who helped in the development and success of this project. Your support, whether through contributions, inspiration, or encouragement, have been invaluable. Thank you.
 
-3. Review the 'Events' tab for the service to identify specific deployment failure reasons
+Specifically, I would like to acknowledge:
 
-4. Check the 'Deployments' tab to see if there are any failed tasks or if the desired count doesn't match the running count
+- [Shaw Talebi](https://www.youtube.com/@ShawhinTalebi) for the inspiration and coding guidance for parts of this project. This project is an extension of his initial work.
 
-5. If tasks are failing, select a failed task and review its logs for error messages
+- [Hema Kalyan Murapaka](https://www.linkedin.com/in/hemakalyan) and [Benito Martin](https://martindatasol.com/blog) for sharing their README.md templates upon which I have derieved my README.md.
 
-6. Verify the task definition:
+- The folks at Astral for their UV [documentation](https://docs.astral.sh/uv/)
 
-   - Ensure the container image exists and is accessible
-   - Check if the container port mappings are correct
-   - Verify the task CPU and memory allocations are sufficient
+---
 
-7. Review the service's network configuration:
+## License
 
-   - Ensure the VPC, subnets, and security groups are properly configured
-   - Verify that the necessary inbound and outbound rules are set in the security groups
-
-8. Check the service auto scaling settings (if enabled) to ensure they are not causing issues
-
-9. If the issue persists, consider rolling back to the previous task definition version:
-
-   - Go to the 'Task Definitions' section
-   - Select the previous working version of the task definition
-   - Choose 'Create new revision'
-   - Update the service to use this new revision
-
-10. If you don't have permissions to perform any of these actions, contact your AWS Administrator
-
-11. If all else fails, consider force deploying a new service:
-
-    - Create a new service with a different name but using the same task definition and configuration
-    - Once the new service is stable, delete the old service
-
-12. Monitor the deployment progress in the ECS console to ensure the changes resolve the issue
-
-https://gallery.ecr.aws/docker/library/python
-
-###
-
-Get hub actions
-
-crontabresource
-https://crontab.guru/
-
-Setup github actions to generate new image and push to docker.
-Complete readme
-
-# Issues running Githu actions running out of space
-
-https://github.com/orgs/community/discussions/25678
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details
