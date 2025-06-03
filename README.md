@@ -210,7 +210,7 @@ If you prefer to use Docker, you can install and run the project using a Docker 
 
 3. **Access the Project**
    - Open a web browser or the appropriate client to access the project.
-     - http://127.0.0.1:8000/search/
+     - http://0.0.0.0:80/search # Note this url is different than one used when running the code using `uv run fastapi dev app.py`.
 
 ---
 
