@@ -95,9 +95,5 @@ RUN echo $PYTHONPATH
 # and change the ownership to user app and group app in one step.
 COPY --from=builder --chown=app:app /app /app
 
-# Make port 5001 available to the world outside this container
-# Expose TCP port 5000 that the container listens on at runtime
-EXPOSE 5001
-
 # Run app.py when the container launches using exec style
 CMD ["fastapi", "run", "/app/src/app.py", "--port", "80" ]
