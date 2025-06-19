@@ -320,7 +320,7 @@ Specifically, I would like to acknowledge:
 
 - [Shaw Talebi](https://www.youtube.com/@ShawhinTalebi) for the inspiration and coding guidance for parts of this project. This project is an extension of his initial work.
 
-- [Hema Kalyan Murapaka](https://www.linkedin.com/in/hemakalyan) and [Benito Martin](https://martindatasol.com/blog) for sharing their README.md templates upon which I have derieved my README.md.
+- [Hema Kalyan Murapaka](https://www.linkedin.com/in/hemakalyan) and [Benito Martin](https://martindatasol.com/blog) for sharing their README.md templates upon which I have derived my README.md.
 
 - The folks at Astral for their UV [documentation](https://docs.astral.sh/uv/)
 
